@@ -249,7 +249,7 @@ f_ping() {
 		return $X_SENDHEX_PING
 	fi
 	#
-	if [[ "$HELLO_REPLY" == 21 ]] ; then # "21" is the correct response to a "c0" ping, but I've seen 18 and 02 too.
+	if [[ "$HELLO_REPLY" == 20 ]] ; then # "21" is the correct response to a "c0" ping, but I've seen 18 and 02 too.
 		echo ""
 		echo "Success! Controller responded to our ping."
 		echo ""
@@ -402,7 +402,7 @@ f_set_fan_speed() {
 	#
 	for EACH in ${ar_SET_FAN_IDS[@]} ; do
 		echodebug "${FUNCNAME[0]}: Setting fan \"$EACH\" to speed \"$SET_FAN_SPEED\"."
-		SET_FAN_SPEED_REPLY=$(f_sendhex 44 0$EACH c0 00 00 $SPEED_HEX) ; X_SENDHEX_SETFANSPEED=$?
+		SET_FAN_SPEED_REPLY=$(f_sendhex 44 00 c0 00 00 $SPEED_HEX) ; X_SENDHEX_SETFANSPEED=$?
 		# The reply should be "01" for success.
 		echodebug "${FUNCNAME[0]}: f_sendhex exit code \"$X_SENDHEX_SETFANSPEED\"."
 		[[ "$X_SENDHEX_SETFANSPEED" -ne 0 ]] && return $? # Stop here if f_sendhex failed.
